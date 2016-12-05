@@ -27,7 +27,9 @@ class Abstractor:
 
     def __get_sentence_weight__(self, sentence):
         words = get_words(sentence)
-        return sum([self.world_storage.get(word) for word in words]) / len(words)
+        if len(words) > 0:
+            return sum([self.world_storage.get(word) for word in words]) / len(words)
+        return float('inf')
 
     def __get_sentences_weights__(self):
         return [self.__get_sentence_weight__(sentence) for sentence in self.sentences]
