@@ -10,7 +10,7 @@
 3. Запускаем файл main.py
 
 Пример запуска из консоли:
-  `python3 text.txt 0.2`
+  `python3 main.py text.txt 0.2`
 
 ##Структура
 
