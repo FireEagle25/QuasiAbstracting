@@ -33,6 +33,9 @@ class WordStorage:
 
         return 0
 
+    def get_stemmed(self, word):
+        return self.m.lemmatize(word)[0]
+
     def __str__(self):
 
         all_words = ""
