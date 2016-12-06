@@ -1,23 +1,29 @@
 from pymystem3 import Mystem
 from Abstractor.StringSlicing import get_words
+from Abstractor.WordsDictionary import WordsDictionary
 
 
 class WordStorage:
     def __init__(self):
         self.storage = {}
         self.m = Mystem()
+        self.words_dictionary = WordsDictionary("rus_words_db.pickle")
 
     def add_from_text(self, text):
         for word in get_words(text):
             self.add(word)
 
     def add(self, word):
+
         normalized_word = self.m.lemmatize(word)[0]
 
-        if normalized_word in self.storage.keys():
-            self.storage[normalized_word] += 1
-        else:
-            self.storage[normalized_word] = 1
+        words = [normalized_word] + self.words_dictionary.get_synonyms(normalized_word)
+
+        for word in words:
+            if word in self.storage.keys():
+                self.storage[word] += 1
+            else:
+                self.storage[word] = 1
 
     def get(self, word):
         normalized_word = self.m.lemmatize(word)[0]
