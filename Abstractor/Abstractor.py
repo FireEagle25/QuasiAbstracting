@@ -1,5 +1,6 @@
 import heapq
 import math
+import sys
 
 from Abstractor.StringSlicing import get_words, get_sentences
 from Abstractor.WordStorage import WordStorage
@@ -16,7 +17,7 @@ class Abstractor:
 
     def truncate(self, prescinde_percent=0.3):
 
-        sentences_count = int(prescinde_percent * len(self.sentences))
+        sentences_count = int((1.0 - prescinde_percent) * len(self.sentences))
         sentences_count = sentences_count if sentences_count > 0 else 1
 
         weights = self.__get_sentences_weights__()
@@ -28,12 +29,14 @@ class Abstractor:
         print("_________________________________________________")
         for weight in smallest_weights:
             print(self.sentences[weights.index(weight)] + ".")
+            #sys.stdout.write(self.sentences[weights.index(weight)] + ".")
+        sys.stdout.flush()
 
     def __get_sentence_weight__(self, sentence):
         words = get_words(sentence)
         if len(words) > 0:
             storage = self.word_storage.storage
-            return sum([(math.pow(float(self.word_storage.get(word)) / len(storage), 2)) for word in sentence])
+            return sum([(float(self.word_storage.get(word)) / len(storage)) ** 2 for word in sentence])
         return float('inf')
 
     def __get_sqr_distance__(self, sentence_x, sentence_y):
