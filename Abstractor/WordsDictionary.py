@@ -2,6 +2,7 @@ import pickle
 
 
 class WordsDictionary:
+
     def __init__(self, dictionary_file):
         with open(dictionary_file, 'rb') as handle:
             self.dict = pickle.load(handle)
