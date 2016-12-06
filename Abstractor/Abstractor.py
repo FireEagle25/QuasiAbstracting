@@ -35,7 +35,9 @@ class Abstractor:
         words = get_words(sentence)
         if len(words) > 0:
             storage = self.word_storage.storage
-            return sum([(float(self.word_storage.get(word)) / len(storage)) ** 2 for word in sentence])
+            words = self.word_storage
+            syn_dict = self.words_dictionary;
+            return sum([(float(words.get(word)) * (1.0 / syn_dict.get_freq(words.get_stemmed(word))) / len(storage)) ** 2 for word in sentence])
         return float('inf')
 
     def __get_sqr_distance__(self, sentence_x, sentence_y):
