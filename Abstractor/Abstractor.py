@@ -1,4 +1,5 @@
 import heapq
+import math
 
 from Abstractor.StringSlicing import get_words, get_sentences
 from Abstractor.WordStorage import WordStorage
@@ -17,7 +18,7 @@ class Abstractor:
         sentences_count = sentences_count if sentences_count > 0 else 1
 
         weights = self.__get_sentences_weights__()
-        smallest_weights = heapq.nsmallest(sentences_count, weights)
+        smallest_weights = heapq.nlargest(sentences_count, weights)
         self.__print_result_text__(weights, smallest_weights)
 
     def __print_result_text__(self, weights, smallest_weights):
@@ -28,7 +29,7 @@ class Abstractor:
     def __get_sentence_weight__(self, sentence):
         words = get_words(sentence)
         if len(words) > 0:
-            return sum([self.world_storage.get(word) for word in words]) / len(words)
+            return math.sqrt(sum([(math.pow(self.world_storage.get(word) / len(words), 2)) for word in words]))
         return float('inf')
 
     def __get_sentences_weights__(self):
