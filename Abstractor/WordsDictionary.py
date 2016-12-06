@@ -8,9 +8,12 @@ class WordsDoctionary:
 
     def get_synonyms(self, word):
         try:
-            return self.dict[word][1]
+            row = self.dict[word]
+            if len(row) >= 2:
+                return row[1]
         except KeyError:
-            return []
+            pass
+        return []
 
     def get_freq(self, word):
         try:
