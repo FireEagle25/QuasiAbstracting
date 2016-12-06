@@ -27,3 +27,11 @@
 
 ###Abstractor
 С помощью WordStorage'а определяет вес предложения
+
+
+
+
+##Авторы
+  [FireEagle25](https://github.com/FireEagle25 "FireEagle25")
+
+  [WinPooh32](https://github.com/WinPooh32 "WinPooh32")
