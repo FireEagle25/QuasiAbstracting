@@ -27,9 +27,8 @@ class Abstractor:
 
     def __print_result_text__(self, weights, smallest_weights):
         print("_________________________________________________")
-        for weight in smallest_weights:
-            print(self.sentences[weights.index(weight)] + ".")
-            #sys.stdout.write(self.sentences[weights.index(weight)] + ".")
+        for index in sorted([weights.index(weight) for weight in smallest_weights]):
+            print(self.sentences[index])
         sys.stdout.flush()
 
     def __get_sentence_weight__(self, sentence):
