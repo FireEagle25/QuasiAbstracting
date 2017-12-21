@@ -8,7 +8,7 @@ class StatisticAbstractor(AbsAbstractor):
         words = get_words(sentence)
         if len(words) > 0:
             return sum([(float(self.word_storage.get_frequency(word)) * (
-                    1.0 / self.words_dictionary.get_freq(words.get_stemmed(word))) / len(
+                    1.0 / self.words_dictionary.get_freq(self.word_storage.get_stemmed(word))) / len(
                 self.word_storage.storage)) ** 2 for word in sentence])
         return float('inf')
 

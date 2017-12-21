@@ -21,6 +21,7 @@ class AbsAbstractor(metaclass=ABCMeta):
         sentences_count = sentences_count if sentences_count > 0 else 1
 
         weights = self.__get_sentences_weights__()
+        print(weights)
         largest_weights = list(set(weights)-set(heapq.nsmallest(sentences_count, weights)))
 
         self.__print_result_text__(weights, largest_weights)

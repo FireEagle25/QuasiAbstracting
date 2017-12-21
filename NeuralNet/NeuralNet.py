@@ -9,23 +9,23 @@ class Net:
     hidden_layers_count = 4
     outputs_count = 1
 
-    @staticmethod
-    def create_from_file(filename):
-        return Net(NetworkReader.readFrom(filename))
+    @classmethod
+    def create_from_file(cls, filename):
+        return cls(NetworkReader.readFrom(filename))
 
     def __init__(self, net=None):
         self.net = net
+        if not net:
+            self._init_net()
 
     def _init_net(self):
         self.net = buildNetwork(Net.inputs_count, Net.hidden_layers_count, Net.outputs_count)
-        self.net.activate([Net.inputs_count, Net.outputs_count])
 
     def train(self, dataset):
         if not self.net:
             self._init_net()
 
         supervised_dataset = SupervisedDataSet(Net.inputs_count, Net.outputs_count)
-
         for row in dataset:
             supervised_dataset.addSample(row[0], row[1])
 

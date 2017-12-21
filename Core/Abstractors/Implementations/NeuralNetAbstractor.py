@@ -10,12 +10,13 @@ class NeuralNetAbstractor(AbsAbstractor):
         self.net = Net.create_from_file(neural_net_file)
 
     def __get_sentence_weight__(self, sentence):
-        return self.net.activate(self.convert_sentence_to_neural_net_params(sentence))
+        weight = self.net.net.activate(self.convert_sentence_to_neural_net_params(sentence))[0]
+        return weight
 
     def convert_sentence_to_neural_net_params(self, sentence):
         words = get_words(sentence)
-        return len(sentence), \
-               len(words), \
-               min([len(word) for word in words]), \
-               max([len(word) for word in words]), \
-               sum([self.words_dictionary.get_freq(word) for word in words])
+        return [len(sentence),
+               len(words),
+               min([len(word) for word in words]),
+               max([len(word) for word in words]),
+               sum([self.words_dictionary.get_freq(word) for word in words])]
