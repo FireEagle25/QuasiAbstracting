@@ -1,6 +1,6 @@
 from pymystem3 import Mystem
-from Abstractor.StringSlicing import get_words
-from Abstractor.WordsDictionary import WordsDictionary
+from Core.StringSlicing import get_words
+from Core.WordsDictionary import WordsDictionary
 
 
 class WordStorage:
@@ -9,11 +9,11 @@ class WordStorage:
         self.m = Mystem()
         self.words_dictionary = WordsDictionary("rus_words_db.pickle")
 
-    def add_from_text(self, text):
+    def push_all_words_from_text(self, text):
         for word in get_words(text):
-            self.add(word)
+            self.push(word)
 
-    def add(self, word):
+    def push(self, word):
 
         normalized_word = self.m.lemmatize(word)[0]
 
@@ -25,7 +25,7 @@ class WordStorage:
             else:
                 self.storage[word] = 1
 
-    def get(self, word):
+    def get_frequency(self, word):
         normalized_word = self.m.lemmatize(word)[0]
 
         if normalized_word in self.storage.keys():

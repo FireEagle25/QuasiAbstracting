@@ -1,18 +1,18 @@
 import heapq
-import math
 import sys
+from abc import ABCMeta, abstractmethod
 
-from Abstractor.StringSlicing import get_words, get_sentences
-from Abstractor.WordStorage import WordStorage
-from Abstractor.WordsDictionary import WordsDictionary
+from Core.StringSlicing import get_sentences
+from Core.WordStorage import WordStorage
+from Core.WordsDictionary import WordsDictionary
 
 
-class Abstractor:
+class AbsAbstractor(metaclass=ABCMeta):
 
     def __init__(self, text):
         self.sentences = get_sentences(text)
         self.word_storage = WordStorage()
-        self.word_storage.add_from_text(text)
+        self.word_storage.push_all_words_from_text(text)
         self.words_dictionary = WordsDictionary("rus_words_db.pickle")
 
     def truncate(self, prescinde_percent=0.3):
@@ -31,22 +31,9 @@ class Abstractor:
             print(self.sentences[index])
         sys.stdout.flush()
 
+    @abstractmethod
     def __get_sentence_weight__(self, sentence):
-        words = get_words(sentence)
-        if len(words) > 0:
-            storage = self.word_storage.storage
-            words = self.word_storage
-            syn_dict = self.words_dictionary;
-            return sum([(float(words.get(word)) * (1.0 / syn_dict.get_freq(words.get_stemmed(word))) / len(storage)) ** 2 for word in sentence])
-        return float('inf')
-
-    def __get_sqr_distance__(self, sentence_x, sentence_y):
-        if len(sentence_x) < len(sentence_y):
-            sentence_x += [0 for i in range(len(sentence_y) - len(sentence_x))]
-        else:
-            sentence_y += [0 for i in range(len(sentence_x) - len(sentence_y))]
-
-        return sum(sentence_x - sentence_y) ** 2
+        pass
 
     def __get_sentences_weights__(self):
         return [self.__get_sentence_weight__(sentence) for sentence in self.sentences]
