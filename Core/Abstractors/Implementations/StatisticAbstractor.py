@@ -1,8 +1,8 @@
-from Core.Abstractors.AbsAbstractor import AbsAbstractor
+from Core.Abstractors.Abstractor import Abstractor
 from Core.StringSlicing import get_words
 
 
-class StatisticAbstractor(AbsAbstractor):
+class StatisticAbstractor(Abstractor):
 
     def __get_sentence_weight__(self, sentence):
         words = get_words(sentence)

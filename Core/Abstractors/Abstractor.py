@@ -7,7 +7,7 @@ from Core.WordStorage import WordStorage
 from Core.WordsDictionary import WordsDictionary
 
 
-class AbsAbstractor(metaclass=ABCMeta):
+class Abstractor(metaclass=ABCMeta):
 
     def __init__(self, text):
         self.sentences = get_sentences(text)
@@ -20,15 +20,15 @@ class AbsAbstractor(metaclass=ABCMeta):
         sentences_count = int((1.0 - prescinde_percent) * len(self.sentences))
         sentences_count = sentences_count if sentences_count > 0 else 1
 
-        weights = self.__get_sentences_weights__()
-        print(weights)
-        largest_weights = list(set(weights)-set(heapq.nsmallest(sentences_count, weights)))
+        weights = largest_weights = self.__get_sentences_weights__()
+        for weight in list(heapq.nsmallest(sentences_count, weights)):
+            largest_weights.remove(weight)
 
         self.__print_result_text__(weights, largest_weights)
 
-    def __print_result_text__(self, weights, smallest_weights):
+    def __print_result_text__(self, weights, largest_weights):
         print("_________________________________________________")
-        for index in sorted([weights.index(weight) for weight in smallest_weights]):
+        for index in sorted([weights.index(weight) for weight in largest_weights]):
             print(self.sentences[index])
         sys.stdout.flush()
 
